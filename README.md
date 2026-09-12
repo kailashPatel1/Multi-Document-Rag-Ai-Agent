@@ -226,7 +226,6 @@ AI application development
 - **Strict Grounding**: Zero fact hallucination on private data queries.
 - **Safe Tabular Execution**: Controlled Pandas dataframe operations without arbitrary code execution.
 - **Input Validation**: Strict file type validation (`.pdf`, `.docx`, `.txt`, `.csv`, `.md`) and size limits.
-- **Secure Password Hashing**: Passlib + bcrypt password encryption with JWT session tokens.
 - **Privacy First**: Sensitive API keys and document vectors remain safely in local/private boundaries.
 
 ## License
