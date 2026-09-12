@@ -1,8 +1,10 @@
 ## Multi-Document RAG AI Agent
 
-A Python-based AI application that allows users to upload multiple documents and ask questions about their content.
+Multi-Document RAG AI Agent is an AI application that allows users to upload multiple documents and ask questions about their content.
 
-The project uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from uploaded documents before generating an answer.
+The system uses RAG to retrieve relevant information from documents and then uses an LLM to generate the answer. It supports document processing, embeddings, ChromaDB, semantic search, BM25, hybrid search, LangGraph, and page-level citations.
+
+It also includes features like document comparison, summarization, CSV analysis, chat history, authentication, and RAG evaluation.
 
 Features
 
@@ -74,7 +76,7 @@ JavaScript
 
 How RAG Works
 
-The basic flow of the project is:
+## The basic flow of the project is:
 
 Document Upload
 ↓
@@ -100,7 +102,7 @@ Answer + Sources
 
 Project Structure
 
-Multi-Document AI Agent/
+## Multi-Document AI Agent/
 │
 ├── backend/
 │   └── app/
@@ -128,7 +130,7 @@ Multi-Document AI Agent/
 ├── requirements.txt
 └── README.md
 
-Running the Project
+## Running the Project
 
 1. Create virtual environment
 
