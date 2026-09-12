@@ -1,0 +1,13 @@
+Transaction_ID,Date,Product,Region,Units_Sold,Unit_Price,Revenue,Customer_Segment
+TXN-1000,2026-01-15,Enterprise AI Platform,North America,12,5000,60000,Fortune 500
+TXN-1001,2026-01-22,Cloud Vector Search,Europe,25,1200,30000,Mid-Market
+TXN-1002,2026-02-05,Enterprise AI Platform,Asia-Pacific,8,5000,40000,Enterprise
+TXN-1003,2026-02-18,Agent Orchestrator,North America,15,3500,52500,Startup
+TXN-1004,2026-03-02,Cloud Vector Search,Europe,30,1200,36000,Enterprise
+TXN-1005,2026-03-20,Enterprise AI Platform,North America,18,5000,90000,Fortune 500
+TXN-1006,2026-04-10,Data Pipeline Pro,Asia-Pacific,40,800,32000,Mid-Market
+TXN-1007,2026-04-25,Agent Orchestrator,Europe,20,3500,70000,Enterprise
+TXN-1008,2026-05-12,Enterprise AI Platform,North America,22,5000,110000,Fortune 500
+TXN-1009,2026-05-28,Cloud Vector Search,Asia-Pacific,35,1200,42000,Enterprise
+TXN-1010,2026-06-15,Agent Orchestrator,North America,28,3500,98000,Fortune 500
+TXN-1011,2026-06-30,Data Pipeline Pro,Europe,45,800,36000,Mid-Market

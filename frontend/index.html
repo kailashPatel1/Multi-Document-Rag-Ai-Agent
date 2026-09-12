@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Doc RAG AI &mdash; Intelligent Knowledge Assistant</title>
+  <meta name="description" content="Production Multi-Document AI Knowledge Assistant powered by RAG, LangGraph Agents, ChromaDB, and Page-Level Citations.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Marked Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>Multi-Doc RAG AI</h1>
+          <span>Knowledge Assistant</span>
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <button class="nav-btn active" data-tab="dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+            Dashboard
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="chat">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Multi-Doc AI Chat
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="comparison">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><path d="M11 18H8a2 2 0 0 1-2-2V9"></path></svg>
+            Doc Comparison
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="upload">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            Upload Documents
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="knowledge_base">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Knowledge Base
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="evaluation">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            RAG Evaluation
+          </button>
+        </li>
+        <li>
+          <button class="nav-btn" data-tab="settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Settings
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="status-badge-inline" id="llm-status-indicator">
+          <span class="pulse-dot"></span>
+          <span>RAG Engine Active</span>
+        </div>
+        <div>Multi-Doc RAG AI Platform</div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <h2 class="page-title" id="page-title">Knowledge Dashboard</h2>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="switchTab('upload')">
+            + Upload Files
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="switchTab('chat')">
+            💬 Open Chat
+          </button>
+
+          <!-- Theme Switcher Dropdown -->
+          <div class="theme-dropdown-container">
+            <button class="btn btn-secondary btn-sm" id="btn-theme-toggle" onclick="toggleThemeDropdown()">
+              <span id="theme-icon">🌙</span> <span id="theme-label">Theme</span> ▾
+            </button>
+            <div class="theme-dropdown-menu" id="theme-dropdown-menu" style="display: none;">
+              <div class="theme-option" onclick="setAppTheme('dark')">🌙 Dark</div>
+              <div class="theme-option" onclick="setAppTheme('light')">☀️ Light</div>
+              <div class="theme-option" onclick="setAppTheme('system')">💻 System</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <div class="content-body">
+        
+        <!-- 1. DASHBOARD VIEW -->
+        <div id="view-dashboard" class="tab-view">
+          <!-- Hero Banner -->
+          <div class="card" style="margin-bottom: 24px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%); border-color: rgba(99, 102, 241, 0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+              <div>
+                <div class="status-badge-inline" style="margin-bottom: 8px;">Multi-Document RAG Agent</div>
+                <h2 style="font-family: var(--font-display); font-size: 22px; color: var(--text-main); margin-bottom: 6px;">
+                  AI Multi-Document Knowledge Assistant
+                </h2>
+                <p style="color: var(--text-muted); font-size: 13.5px; max-width: 650px; line-height: 1.5;">
+                  Ask natural-language questions across your uploaded documents and get grounded answers with source citations.
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="switchTab('chat')">
+                  💬 Start Asking Questions
+                </button>
+                <button class="btn btn-secondary" onclick="switchTab('upload')">
+                  📤 Upload Files
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-time Stats Grid -->
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-icon" style="color: var(--primary);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="dash-stat-docs">0</div>
+                <div class="stat-label">Uploaded Documents</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="color: var(--accent-cyan);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="dash-stat-chunks">0</div>
+                <div class="stat-label">Searchable Chunks</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="color: var(--accent-emerald);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="dash-stat-vectors">0</div>
+                <div class="stat-label">ChromaDB Vectors</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="color: var(--accent-amber);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value" id="dash-stat-uptime">0m</div>
+                <div class="stat-label">Engine Uptime</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggested RAG Queries -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-header">
+              <div class="card-title">
+                <span>💡</span> Suggested Knowledge Queries
+              </div>
+            </div>
+            <div class="scenario-pills">
+              <div class="scenario-pill" onclick="launchRAGQuery('What information is available in my documents?')">
+                📄 "What information is available in my documents?"
+              </div>
+              <div class="scenario-pill" onclick="launchRAGQuery('Summarize my documents')">
+                📑 "Summarize my documents"
+              </div>
+              <div class="scenario-pill" onclick="launchRAGQuery('Find key topics in my documents')">
+                🔍 "Find key topics in my documents"
+              </div>
+              <div class="scenario-pill" onclick="launchRAGQuery('What is RAG?')">
+                📖 "What is RAG?"
+              </div>
+              <div class="scenario-pill" onclick="launchRAGQuery('Find information about a specific topic')">
+                🎯 "Find information about a specific topic"
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents Overview Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📚</span> Active Knowledge Base Documents
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchTab('knowledge_base')">
+                View Full Library →
+              </button>
+            </div>
+            <div id="dash-recent-docs"></div>
+          </div>
+        </div>
+
+        <!-- 2. CHAT & RAG AGENT VIEW -->
+        <div id="view-chat" class="tab-view" style="display: none;">
+          <div class="chat-container">
+            <!-- Left: Sessions Sidebar -->
+            <div class="chat-sessions-pane" id="chat-sessions-pane">
+              <div class="chat-sessions-header">
+                <span style="font-weight: 600; font-size: 12.5px;">Conversations</span>
+                <button class="btn btn-primary btn-sm" id="btn-new-session" style="padding: 3px 8px; font-size: 11px;">+ New</button>
+              </div>
+              <div class="chat-sessions-list" id="chat-sessions-list"></div>
+            </div>
+
+            <!-- Right: Chat Window -->
+            <div class="chat-main-pane">
+              <div class="chat-top-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <button class="btn btn-secondary btn-sm" id="btn-toggle-sessions" title="Toggle Conversations Panel" style="padding: 4px 8px; font-size: 11.5px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                    <span>Chats</span>
+                  </button>
+                  <span style="font-weight: 600; font-size: 13px;">Mode:</span>
+                  <div class="mode-toggle">
+                    <button class="mode-toggle-btn active" data-mode="agent">RAG Agent</button>
+                    <button class="mode-toggle-btn" data-mode="rag_direct">Direct RAG</button>
+                  </div>
+                </div>
+                <div class="status-badge-inline" id="chat-llm-badge" style="margin: 0; font-size: 11px;">
+                  <span>Grounded in Documents</span>
+                </div>
+              </div>
+
+              <!-- Document-Specific Chat Banner -->
+              <div class="doc-chat-banner" id="doc-chat-banner" style="display: none;">
+                <div class="doc-chat-banner-info">
+                  <span class="doc-chat-icon">📄</span>
+                  <div>
+                    <div class="doc-chat-title">Current Document: <strong id="doc-banner-name">Document</strong></div>
+                    <div class="doc-chat-subtitle">All answers in this chat are grounded ONLY in this document.</div>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="clearDocumentSelection()">
+                  ✕ Clear Document Selection
+                </button>
+              </div>
+
+              <!-- Message Stream -->
+              <div class="chat-messages" id="chat-messages-container"></div>
+
+              <!-- Input Area -->
+              <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input-field" placeholder="Ask questions across uploaded documents (e.g. 'Summarize key findings', 'What is RAG?')..." autocomplete="off">
+                <button class="btn btn-primary" id="btn-send-chat">
+                  <span>Ask</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MULTI-DOCUMENT COMPARISON STUDIO -->
+        <div id="view-comparison" class="tab-view" style="display: none;">
+          <div class="card" style="max-width: 900px; margin: 0 auto;">
+            <div class="card-header">
+              <div class="card-title">
+                <span>⚖️</span> Multi-Document Comparison Studio
+              </div>
+            </div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+              Select two documents from your knowledge base to execute a side-by-side comparative analysis.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div>
+                <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Document A:</label>
+                <select id="compare-doc-a" class="chat-input-field" style="width: 100%;"></select>
+              </div>
+              <div>
+                <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Document B:</label>
+                <select id="compare-doc-b" class="chat-input-field" style="width: 100%;"></select>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Comparison Criteria / Focus (Optional):</label>
+              <input type="text" id="compare-aspects" class="chat-input-field" placeholder="e.g. key differences, requirements matching, skills, policies..." style="width: 100%;">
+            </div>
+
+            <button class="btn btn-primary" id="btn-run-comparison">
+              🚀 Run Comparative Analysis
+            </button>
+
+            <!-- Comparison Results Box -->
+            <div id="comparison-result-box" style="display: none; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+              <div class="card-title" style="margin-bottom: 12px;">Comparison Output</div>
+              <div id="comparison-output-content" class="markdown-body" style="background: rgba(0,0,0,0.3); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 14px; line-height: 1.6;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. UPLOAD DOCUMENTS VIEW -->
+        <div id="view-upload" class="tab-view" style="display: none;">
+          <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📤</span> Ingest Knowledge Base Documents
+              </div>
+            </div>
+            
+            <div class="upload-dropzone" id="upload-dropzone">
+              <input type="file" id="file-upload-input" multiple style="display: none;" accept=".pdf,.docx,.txt,.csv,.md">
+              <div class="dropzone-icon">📁</div>
+              <div class="dropzone-text">Click or drag & drop documents here</div>
+              <div class="dropzone-subtext">Supported formats: PDF, DOCX, TXT, CSV, Markdown</div>
+            </div>
+
+            <!-- Chunking Configuration Parameters -->
+            <div style="margin-top: 24px; padding: 18px; background: rgba(0,0,0,0.25); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <div style="font-weight: 600; font-size: 13.5px; margin-bottom: 12px; color: var(--text-main);">Ingestion Chunking Parameters:</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                  <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Chunk Size (Characters):</label>
+                  <input type="number" id="upload-chunk-size" class="chat-input-field" value="600" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Chunk Overlap (Characters):</label>
+                  <input type="number" id="upload-chunk-overlap" class="chat-input-field" value="100" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+
+            <div id="upload-status-box" style="display: none; margin-top: 18px; padding: 14px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.3); border: 1px solid var(--border-color);"></div>
+          </div>
+        </div>
+
+        <!-- 5. KNOWLEDGE BASE LIBRARY VIEW -->
+        <div id="view-knowledge_base" class="tab-view" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📚</span> Document Repository & Index
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="switchTab('upload')">
+                + Upload New Documents
+              </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Document Name</th>
+                    <th>Format</th>
+                    <th>Size</th>
+                    <th>Pages</th>
+                    <th>Chunks</th>
+                    <th>Added</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="kb-documents-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. RAG EVALUATION BENCHMARK VIEW -->
+        <div id="view-evaluation" class="tab-view" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>🎯</span> RAG Quality Benchmark Suite
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-run-eval">
+                ⚡ Run Live Evaluation
+              </button>
+            </div>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+              Automated RAG evaluation tracking Retrieval Precision, Context Relevance, Grounding Faithfulness, and Citation Accuracy.
+            </p>
+
+            <div id="eval-metrics-grid" class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-precision">--</div>
+                  <div class="stat-label">Retrieval Precision</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-recall">--</div>
+                  <div class="stat-label">Retrieval Recall</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-relevance">--</div>
+                  <div class="stat-label">Context Relevance</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-faithfulness">--</div>
+                  <div class="stat-label">Answer Faithfulness</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-citation-acc">--</div>
+                  <div class="stat-label">Citation Accuracy</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-info">
+                  <div class="stat-value" id="eval-latency">--</div>
+                  <div class="stat-label">Avg Latency</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed Benchmark Queries Table -->
+            <div style="margin-top: 24px;">
+              <div class="card-title" style="margin-bottom: 12px; font-size: 14.5px;">Evaluation Query Traces</div>
+              <div style="overflow-x: auto;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Query</th>
+                      <th>Expected Doc</th>
+                      <th>Retrieved Docs</th>
+                      <th>Precision</th>
+                      <th>Latency</th>
+                    </tr>
+                  </thead>
+                  <tbody id="eval-queries-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. SETTINGS VIEW -->
+        <div id="view-settings" class="tab-view" style="display: none;">
+          <div class="card" style="max-width: 720px; margin: 0 auto;">
+            <div class="card-header">
+              <div class="card-title">
+                <span>⚙️</span> System Configuration & LLM Providers
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 18px;">
+              <!-- Theme Preference -->
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Appearance Theme:</label>
+                <select id="setting-app-theme" class="chat-input-field" style="width: 100%;" onchange="setAppTheme(this.value)">
+                  <option value="dark">🌙 Dark Theme (Default)</option>
+                  <option value="light">☀️ Light Theme</option>
+                  <option value="system">💻 System Preference</option>
+                </select>
+              </div>
+
+              <!-- Active LLM Provider -->
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Active LLM Provider:</label>
+                <select id="setting-llm-provider" class="chat-input-field" style="width: 100%;">
+                  <option value="groq">Groq (Llama 3.3 70B Versatile / Mixtral)</option>
+                  <option value="gemini">Google Gemini (Gemini 1.5 Flash)</option>
+                  <option value="mock">Local Deterministic Engine (Offline / Local)</option>
+                </select>
+              </div>
+
+              <!-- Groq Key Row -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Groq API Key:</label>
+                  <span id="groq-key-status" class="status-badge-inline" style="font-size: 11px; margin: 0;">Checking...</span>
+                </div>
+                <input type="password" id="setting-groq-key" class="chat-input-field" placeholder="Enter new Groq API key (gsk_...)" style="width: 100%;" autocomplete="new-password">
+                <small style="color: var(--text-dim); font-size: 11.5px; display: block; margin-top: 4px;">
+                  Saved securely to backend <code>.env</code> file. Never exposed in plaintext to the browser.
+                </small>
+              </div>
+
+              <!-- Gemini Key Row -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Gemini API Key:</label>
+                  <span id="gemini-key-status" class="status-badge-inline" style="font-size: 11px; margin: 0;">Checking...</span>
+                </div>
+                <input type="password" id="setting-gemini-key" class="chat-input-field" placeholder="Enter new Gemini API key (AIza...)" style="width: 100%;" autocomplete="new-password">
+                <small style="color: var(--text-dim); font-size: 11.5px; display: block; margin-top: 4px;">
+                  Saved securely to backend <code>.env</code> file.
+                </small>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div>
+                  <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Chunk Size:</label>
+                  <input type="number" id="setting-chunk-size" class="chat-input-field" value="600" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Chunk Overlap:</label>
+                  <input type="number" id="setting-chunk-overlap" class="chat-input-field" value="100" style="width: 100%;">
+                </div>
+              </div>
+
+              <div style="margin-top: 10px; display: flex; gap: 12px;">
+                <button class="btn btn-primary" id="btn-save-settings">💾 Save Configuration</button>
+                <button class="btn btn-danger" id="btn-system-reset">Factory Reset Database</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modal -->
+  <div class="modal-overlay" id="global-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" style="font-size: 16px; font-family: var(--font-display); color: var(--text-main);"></h3>
+        <button class="btn-modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Controller Script -->
+  <script src="/static/app.js" charset="utf-8"></script>
+</body>
+</html>

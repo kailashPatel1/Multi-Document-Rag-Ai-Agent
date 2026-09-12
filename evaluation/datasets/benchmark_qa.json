@@ -1,0 +1,44 @@
+[
+  {
+    "id": "eval_1",
+    "question": "What is RAG and why is it used?",
+    "expected_answer": "Retrieval-Augmented Generation (RAG) combines information retrieval with large language models to ground answers in private documents and eliminate hallucinations.",
+    "relevant_document": "RAG_Notes.pdf",
+    "relevant_page": 1
+  },
+  {
+    "id": "eval_2",
+    "question": "How do text embeddings work in vector search?",
+    "expected_answer": "Embeddings transform text into dense numerical vectors in a multi-dimensional semantic space where cosine distance captures semantic similarity.",
+    "relevant_document": "RAG_Notes.pdf",
+    "relevant_page": 2
+  },
+  {
+    "id": "eval_3",
+    "question": "What is hybrid retrieval and Reciprocal Rank Fusion?",
+    "expected_answer": "Hybrid retrieval fuses dense vector similarity with BM25 keyword matching using Reciprocal Rank Fusion (RRF) to combine semantic understanding with exact term precision.",
+    "relevant_document": "RAG_Notes.pdf",
+    "relevant_page": 3
+  },
+  {
+    "id": "eval_4",
+    "question": "What are transformer attention mechanisms?",
+    "expected_answer": "Self-attention computes dynamic weights between all token pairs in a sequence using Query, Key, and Value projections to capture long-range contextual relationships.",
+    "relevant_document": "ML_Notes.pdf",
+    "relevant_page": 1
+  },
+  {
+    "id": "eval_5",
+    "question": "What candidate skills are listed in the resume?",
+    "expected_answer": "The resume lists Python, PyTorch, LangChain, ChromaDB, FastAPI, Vector Databases, Transformers, and GenAI system engineering.",
+    "relevant_document": "Resume.pdf",
+    "relevant_page": 1
+  },
+  {
+    "id": "eval_6",
+    "question": "What are the required qualifications in the job description?",
+    "expected_answer": "The job description requires experience with LLM agents, LangGraph, RAG pipelines, Vector databases, production API development, and distributed systems.",
+    "relevant_document": "Job_Description.pdf",
+    "relevant_page": 1
+  }
+]
