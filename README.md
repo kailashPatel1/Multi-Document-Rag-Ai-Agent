@@ -1,4 +1,4 @@
-Multi-Document RAG AI Agent
+## Multi-Document RAG AI Agent
 
 A Python-based AI application that allows users to upload multiple documents and ask questions about their content.
 
@@ -218,18 +218,15 @@ Document processing
 
 AI application development
 
-License
 
-MIT License
 
-## 🔒 Security & Best Practices
+##  Security & Best Practices
 - **Strict Grounding**: Zero fact hallucination on private data queries.
 - **Safe Tabular Execution**: Controlled Pandas dataframe operations without arbitrary code execution.
 - **Input Validation**: Strict file type validation (`.pdf`, `.docx`, `.txt`, `.csv`, `.md`) and size limits.
 - **Secure Password Hashing**: Passlib + bcrypt password encryption with JWT session tokens.
 - **Privacy First**: Sensitive API keys and document vectors remain safely in local/private boundaries.
 
----
-
-## 📄 License
+## License
 MIT License. Built for enterprise GenAI applications and engineering portfolios.
+
