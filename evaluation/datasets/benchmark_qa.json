@@ -6,6 +6,7 @@
     "relevant_document": "RAG_Notes.pdf",
     "relevant_page": 1
   },
+  
   {
     "id": "eval_2",
     "question": "How do text embeddings work in vector search?",
