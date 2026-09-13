@@ -169,7 +169,6 @@ body {
   gap: 10px;
   border-bottom: 1px solid var(--border-color);
 }
-
 .logo-badge {
   width: 36px;
   height: 36px;
@@ -270,7 +269,6 @@ body {
   background-color: var(--accent-emerald);
   box-shadow: 0 0 8px var(--accent-emerald);
 }
-
 /* Main Content Area */
 .main-viewport {
   flex-grow: 1;
