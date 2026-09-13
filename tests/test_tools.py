@@ -26,6 +26,7 @@ def setup_test_data():
         db.commit()
     db.close()
 
+
 def test_calculator_tool():
     res1 = calculator_tool("120 * 45")
     assert res1["computed_result"] == 5400.0
