@@ -7,15 +7,10 @@ The system uses RAG to retrieve relevant information from documents and then use
 It also includes features like document comparison, summarization, CSV analysis, chat history, authentication, and RAG evaluation.
 
 ## Features
-
 Upload PDF, TXT and CSV files
-
 Extract and split document text into chunks
-
 Generate text embeddings
-
 Store embeddings in ChromaDB
-
 Semantic search
 
 BM25 keyword search
