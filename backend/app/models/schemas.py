@@ -33,6 +33,8 @@ class DocumentChunkResponse(BaseModel):
     char_count: int
     metadata: Dict[str, Any] = {}
 
+
+
 class DocumentResponse(BaseModel):
     id: str
     filename: str
@@ -53,6 +55,7 @@ class DocumentSummaryRequest(BaseModel):
 class DocumentCompareRequest(BaseModel):
     document_ids: List[str] = Field(..., min_length=2, max_length=5)
     query: Optional[str] = "Compare key concepts, differences, and complementary aspects across these documents."
+
 
 # --- Citation & Retrieval Schemas ---
 class Citation(BaseModel):
