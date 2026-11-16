@@ -3,9 +3,11 @@ import sys
 import subprocess
 from pathlib import Path
 
+
 # Ensure project directory is in PYTHONPATH
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE_DIR))
+
 
 # If executed with a Python outside .venv, automatically forward to project .venv
 venv_python = BASE_DIR / ".venv" / "Scripts" / "python.exe"
@@ -24,6 +26,7 @@ if sys.platform == "win32":
         pass
 
 import uvicorn
+
 
 if __name__ == "__main__":
     print("\n" + "=" * 60)
